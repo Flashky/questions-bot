@@ -16,7 +16,7 @@ OAuth configuration:
 
 IRC configuration:
 
-- ``twitch.irc.host:`` IRC server host. Default value will be ``irc.chat.twitch.tv`` if not set.
-- ``twitch.irc.nick:`` Bot nick
-- ``twitch.irc.channel:`` Channel to join without hashtag (#)
+- ``twitch.irc.host``: IRC server host. Default value will be ``irc.chat.twitch.tv`` if not set.
+- ``twitch.irc.nick``: Bot nick
+- ``twitch.irc.channel``: Channel to join without hashtag (#)
 
