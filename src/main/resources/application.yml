@@ -1,0 +1,9 @@
+
+twitch:
+  oauth:
+    client-id: the_client_id
+    client-secret: the_client_secret
+  irc:
+    host: irc.chat.twitch.tv
+    nick: bot_nick
+    channel: channel_name
