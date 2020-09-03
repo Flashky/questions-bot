@@ -12,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.xio91.bots.properties.TwitchIRCProperties;
+import com.xio91.bots.properties.eventhandlers.ChannelMessageEventHandler;
 
 @SpringBootApplication
 public class QuestionsBotApplication implements CommandLineRunner {
@@ -47,7 +48,8 @@ public class QuestionsBotApplication implements CommandLineRunner {
 		// Build the client and add twitch support
 		Client client = clientBuilder.build();
 		TwitchSupport.addSupport(client);
-
+		client.getEventManager().registerEventListener(new ChannelMessageEventHandler());
+		
 		// Connect and joint to channel
 		client.connect();
 		client.addChannel(CHANNEL_PREFIX + ircProperties.getChannel());
