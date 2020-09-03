@@ -2,11 +2,12 @@
 
 ## Program arguments
 
-Temporary, while starting the development, the oauth token can be added via the first program argument with no "oauth:" prefix on it.
+Temporal hack: 
+While starting the development, the OAuth token can be added via the first program argument with no ``oauth:`` prefix on it.
 
-## Configuration properties to set
+## Configuration properties
 
-You can set this configuration properties by overriding either ``application.yml`` or as environment variables.
+You must set these configuration properties by overriding either ``application.yml`` or as environment variables before running the bot.
 
 OAuth configuration:
 
