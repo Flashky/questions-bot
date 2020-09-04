@@ -7,3 +7,28 @@ twitch:
     host: irc.chat.twitch.tv
     nick: bot_nick
     channel: channel_name
+
+# See https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-security.html
+# https://dzone.com/articles/spring-boot-how-to-solve-oauth2-err-too-many-redir
+spring:
+  security:
+    oauth2:
+      client:
+        registration: 
+          twitch:
+            client-id: the_client_id
+            client-secret: the_client_secret
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/callback
+            scope:
+            - chat:read
+            - chat:edit
+            - channel:moderate
+            - whispers:read
+            - whispers:edit
+            - channel_editor
+        provider:
+          twitch:
+            authorization-uri: https://id.twitch.tv/oauth2/authorize
+            token-uri: https://id.twitch.tv/oauth2/token
+            
