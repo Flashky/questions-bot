@@ -11,8 +11,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.xio91.bots.eventhandlers.ChannelEventHandler;
+import com.xio91.bots.eventhandlers.ClientEventHandler;
+import com.xio91.bots.eventhandlers.ConnectionEventHandler;
+import com.xio91.bots.eventhandlers.TwitchEventHandler;
+import com.xio91.bots.eventhandlers.UserEventHandler;
 import com.xio91.bots.properties.TwitchIRCProperties;
-import com.xio91.bots.properties.eventhandlers.ChannelMessageEventHandler;
 
 @SpringBootApplication
 public class QuestionsBotApplication implements CommandLineRunner {
@@ -40,15 +44,23 @@ public class QuestionsBotApplication implements CommandLineRunner {
 					.nick(ircProperties.getNick());
 		 
 		// Debug chat input/output
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
 		clientBuilder.listeners().input(line -> System.out.println(sdf.format(new Date()) + ' ' + "[I] " + line));
 		clientBuilder.listeners().output(line -> System.out.println(sdf.format(new Date()) + ' ' + "[O] " + line));
 		clientBuilder.listeners().exception(Throwable::printStackTrace);
-		 
+		
+		
 		// Build the client and add twitch support
 		Client client = clientBuilder.build();
 		TwitchSupport.addSupport(client);
-		client.getEventManager().registerEventListener(new ChannelMessageEventHandler());
+		
+		// Event handlers
+		client.getEventManager().registerEventListener(new ConnectionEventHandler());
+		client.getEventManager().registerEventListener(new ClientEventHandler());
+		client.getEventManager().registerEventListener(new UserEventHandler());
+		client.getEventManager().registerEventListener(new TwitchEventHandler());
+		client.getEventManager().registerEventListener(new ChannelEventHandler());
 		
 		// Connect and joint to channel
 		client.connect();
