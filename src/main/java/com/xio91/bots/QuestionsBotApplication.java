@@ -1,21 +1,10 @@
 package com.xio91.bots;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.kitteh.irc.client.library.Client;
-import org.kitteh.irc.client.library.Client.Builder;
-import org.kitteh.irc.client.library.feature.twitch.TwitchSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.xio91.bots.eventhandlers.ChannelEventHandler;
-import com.xio91.bots.eventhandlers.ClientEventHandler;
-import com.xio91.bots.eventhandlers.ConnectionEventHandler;
-import com.xio91.bots.eventhandlers.TwitchEventHandler;
-import com.xio91.bots.eventhandlers.UserEventHandler;
 import com.xio91.bots.properties.TwitchIRCProperties;
 
 @SpringBootApplication
@@ -35,6 +24,7 @@ public class QuestionsBotApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		/*
 		// Connection configuration
 		Builder clientBuilder =  Client.builder()
 					.server()
@@ -65,7 +55,6 @@ public class QuestionsBotApplication implements CommandLineRunner {
 		// Connect and joint to channel
 		client.connect();
 		client.addChannel(CHANNEL_PREFIX + ircProperties.getChannel());
-		
+		*/
 	}
-
 }
