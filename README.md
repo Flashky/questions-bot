@@ -9,10 +9,10 @@ While starting the development, the OAuth token can be added via the first progr
 
 You must set these configuration properties by overriding either ``application.yml`` or as environment variables before running the bot.
 
-OAuth configuration:
+OAuth 2.0 configuration:
 
-- ``twitch.oauth.client-id``: Twitch API OAuth client id
-- ``twitch.oauth.client-secret``: Twitch API OAuth client secret
+- ``spring.security.oauth2.client.registration.twitch.client-id``: Twitch API OAuth client id
+- ``spring.security.oauth2.client.registration.twitch.client-secret``: Twitch API OAuth client secret
 
 IRC configuration:
 
