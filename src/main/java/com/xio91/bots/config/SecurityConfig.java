@@ -1,4 +1,4 @@
-package com.xio91.bots.web.config;
+package com.xio91.bots.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         	.authorizeRequests()
-        	.antMatchers("/home", "/login**","/callback", "/webjars/**", "/error**", "/oauth2/authorization/**", "/oauth2/authorize")
+        	.antMatchers("/", "/home", "/login**", "/webjars/**", "/error**", "/oauth2/authorization/**")
         	.permitAll()
         	.anyRequest()
         	.authenticated()
