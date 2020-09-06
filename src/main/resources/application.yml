@@ -1,4 +1,7 @@
-
+logging:  level:    #root: DEBUG   
+    org.springframework.web.client: DEBUG
+    #org.apache.http: DEBUG
+    #httpclient.wire: DEBUG
 twitch:
   irc:
     host: irc.chat.twitch.tv
@@ -7,6 +10,15 @@ twitch:
 
 # See https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-security.html
 # https://dzone.com/articles/spring-boot-how-to-solve-oauth2-err-too-many-redir
+
+# Default URIs by Spring starter:
+# /login
+
+# Redirect URI: 
+# /login/oauth2/code/ -> Used by: OAuth2AccessTokenResponseClient
+# https://docs.spring.io/spring-security/site/docs/5.0.7.RELEASE/reference/html/oauth2login-advanced.html#oauth2login-advanced-redirection-endpoint
+# https://github.com/spring-projects/spring-security/issues/6463
+
 spring:
   security:
     oauth2:
@@ -14,9 +26,9 @@ spring:
         registration: 
           twitch:
             client-id: the_client_id
-            client-secret: the_client_secret
+            client-secret: the_client_secret            client-authentication-method: post
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/callback
+            redirect-uri: http://localhost:8080/login/oauth2/code/ # Si usamos formlogin: /oauth2/code/twitch | Si usamos oauth2login: /oauth2/code/ 
             scope:
             - chat:read
             - chat:edit
@@ -27,5 +39,4 @@ spring:
         provider:
           twitch:
             authorization-uri: https://id.twitch.tv/oauth2/authorize
-            token-uri: https://id.twitch.tv/oauth2/token
-            
+            token-uri: https://id.twitch.tv/oauth2/token            user-info-uri: https://id.twitch.tv/oauth2/userinfo            user-name-attribute: preferred_username
