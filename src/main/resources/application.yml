@@ -1,8 +1,7 @@
-logging:  level:    #root: DEBUG   
+logging:  level:    root: DEBUG   
     org.springframework.web.client: DEBUG
     #org.apache.http: DEBUG
-    #httpclient.wire: DEBUG
-
+    #httpclient.wire: DEBUG
 twitch:
   irc:
     host: irc.chat.twitch.tv
@@ -29,7 +28,7 @@ spring:
             client-id: the_client_id
             client-secret: the_client_secret            client-authentication-method: post
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/
+            redirect-uri: http://localhost:8080/login/oauth2/code/ # Si usamos formlogin: /oauth2/code/twitch | Si usamos oauth2login: /oauth2/code/ 
             scope:
             - chat:read
             - chat:edit
