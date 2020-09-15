@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         			"/oauth2/authorization/**",
         			"/oauth/code/*",
         			"/check-token").permitAll()
-        	.anyRequest()
+        		.antMatchers("/", "/irc/**")
         		.authenticated()
         .and()
         	.oauth2Login();

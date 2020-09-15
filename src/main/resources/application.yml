@@ -1,7 +1,7 @@
 logging:  level:    #root: DEBUG   
     org.springframework.web.client: DEBUG
     #org.apache.http: DEBUG
-    #httpclient.wire: DEBUG
+    #httpclient.wire: DEBUG    com.xio91.bots.restclients: DEBUG
 twitch:
   irc:
     host: irc.chat.twitch.tv
