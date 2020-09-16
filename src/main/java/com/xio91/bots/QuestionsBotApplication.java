@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.xio91.bots.properties.TwitchIRCProperties;
 import com.xio91.bots.service.IrcClient;
 
 @SpringBootApplication
-@EnableFeignClients
+@EnableScheduling
 public class QuestionsBotApplication implements CommandLineRunner {
 
 	private static final Logger LOG = LoggerFactory.getLogger(QuestionsBotApplication.class);
