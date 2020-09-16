@@ -11,9 +11,10 @@ import lombok.Data;
 public class TwitchIRCProperties {
 
 	public static final String DEFAULT_IRC_HOST = "irc.chat.twitch.tv";
+	public static final String DEFAULT_NICK = "QuestionBot";
 	
 	private String host = DEFAULT_IRC_HOST;
-	private String nick;
+	private String nick = DEFAULT_NICK;
 	private String channel;
 	
 }

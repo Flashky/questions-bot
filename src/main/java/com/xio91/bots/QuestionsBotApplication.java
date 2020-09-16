@@ -1,32 +1,30 @@
 package com.xio91.bots;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.kitteh.irc.client.library.Client;
-import org.kitteh.irc.client.library.Client.Builder;
-import org.kitteh.irc.client.library.feature.twitch.TwitchSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
-import com.xio91.bots.eventhandlers.ChannelEventHandler;
-import com.xio91.bots.eventhandlers.ClientEventHandler;
-import com.xio91.bots.eventhandlers.ConnectionEventHandler;
-import com.xio91.bots.eventhandlers.TwitchEventHandler;
-import com.xio91.bots.eventhandlers.UserEventHandler;
 import com.xio91.bots.properties.TwitchIRCProperties;
+import com.xio91.bots.service.IrcClient;
 
 @SpringBootApplication
+@EnableFeignClients
 public class QuestionsBotApplication implements CommandLineRunner {
 
+	private static final Logger LOG = LoggerFactory.getLogger(QuestionsBotApplication.class);
+	
 	private final static String OAUTH_PREFIX = "oauth:";
 	private final static String CHANNEL_PREFIX = "#";
 	
 	@Autowired
 	private TwitchIRCProperties ircProperties;
-
+	
+	@Autowired
+	private IrcClient botService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(QuestionsBotApplication.class, args);
@@ -35,37 +33,23 @@ public class QuestionsBotApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		// Connection configuration
-		Builder clientBuilder =  Client.builder()
-					.server()
-					.host(ircProperties.getHost())
-					.password(OAUTH_PREFIX + args[1])
-				.then()
-					.nick(ircProperties.getNick());
-		 
-		// Debug chat input/output
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-		clientBuilder.listeners().input(line -> System.out.println(sdf.format(new Date()) + ' ' + "[I] " + line));
-		clientBuilder.listeners().output(line -> System.out.println(sdf.format(new Date()) + ' ' + "[O] " + line));
-		clientBuilder.listeners().exception(Throwable::printStackTrace);
 		
 		
-		// Build the client and add twitch support
-		Client client = clientBuilder.build();
-		TwitchSupport.addSupport(client);
+		//String oauthToken = tokenService.refreshToken(args[1]);
+		//botService.connect(oauthToken + "a");
+		/*
+		while(true) {
+			tokenService.validateToken("aaa");
+			tokenService.revokeToken(newToken);
+			tokenService.validateToken(newToken);
+			LOG.info("Sleeping.");
+			Thread.sleep(1800000);
+			LOG.info("Wake up");
+		}
+		*/
 		
-		// Event handlers
-		client.getEventManager().registerEventListener(new ConnectionEventHandler());
-		client.getEventManager().registerEventListener(new ClientEventHandler());
-		client.getEventManager().registerEventListener(new UserEventHandler());
-		client.getEventManager().registerEventListener(new TwitchEventHandler());
-		client.getEventManager().registerEventListener(new ChannelEventHandler());
-		
-		// Connect and joint to channel
-		client.connect();
-		client.addChannel(CHANNEL_PREFIX + ircProperties.getChannel());
+
+
 		
 	}
-
 }
