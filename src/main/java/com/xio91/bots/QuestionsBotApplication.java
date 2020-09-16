@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import com.xio91.bots.properties.TwitchIRCProperties;
-import com.xio91.bots.service.BotService;
+import com.xio91.bots.service.IrcClient;
 
 @SpringBootApplication
 @EnableFeignClients
@@ -24,7 +24,7 @@ public class QuestionsBotApplication implements CommandLineRunner {
 	private TwitchIRCProperties ircProperties;
 	
 	@Autowired
-	private BotService botService;
+	private IrcClient botService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(QuestionsBotApplication.class, args);

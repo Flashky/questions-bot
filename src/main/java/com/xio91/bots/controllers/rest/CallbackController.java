@@ -1,4 +1,4 @@
-package com.xio91.bots.controllers;
+package com.xio91.bots.controllers.rest;
 
 import java.security.Principal;
 
@@ -29,7 +29,7 @@ public class CallbackController {
    // private HttpSessionOAuth2AuthorizedClientRepository repo;
     
     
-	@GetMapping("/")
+	@GetMapping("/root")
 	public String root() {
  
 

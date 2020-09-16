@@ -1,4 +1,4 @@
-package com.xio91.bots.controllers;
+package com.xio91.bots.controllers.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xio91.bots.service.AuthenticationService;
-import com.xio91.bots.service.BotService;
+import com.xio91.bots.service.IrcClient;
 
 
 @RestController
@@ -22,7 +22,7 @@ public class BotController {
     private AuthenticationService authenticationService;
     
     @Autowired
-    private BotService botService;
+    private IrcClient botService;
     
 
 	
@@ -37,7 +37,7 @@ public class BotController {
 		//tokenService.validateToken(accessToken);
 		botService.connect(authorizedClient.getAccessToken().getTokenValue(), authorizedClient.getPrincipalName());
 
-	    
+		botService.connect(authorizedClient.getAccessToken().getTokenValue(), authorizedClient.getPrincipalName());
 	}
 
 	

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.xio91.bots.service.BotService;
+import com.xio91.bots.service.IrcClient;
 
 import lombok.NonNull;
 import net.engio.mbassy.listener.Handler;
@@ -21,7 +21,7 @@ public class UserEventHandler {
 	private static final String AUTH_FAILED = "Login authentication failed";
 	
 	@Autowired 
-	private BotService botService;
+	private IrcClient botService;
 	
 	@Handler
 	public void onServerNotice(ServerNoticeEvent event) {

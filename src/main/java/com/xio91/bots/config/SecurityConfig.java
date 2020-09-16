@@ -1,5 +1,6 @@
 package com.xio91.bots.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -7,11 +8,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private AuthenticationSuccessHandler authSuccessHandler;
+	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	
@@ -37,7 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.antMatchers("/", "/irc/**")
         		.authenticated()
         .and()
-        	.oauth2Login();
+        	.oauth2Login()
+        	.successHandler(authSuccessHandler);
         	//.oauth2Client()
   	    //.and()
   	    //	.formLogin(); // Add this to use a form login for authenticating
@@ -57,4 +63,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
 }

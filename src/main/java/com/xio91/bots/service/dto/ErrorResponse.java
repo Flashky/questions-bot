@@ -1,4 +1,4 @@
-package com.xio91.bots.feign.dto;
+package com.xio91.bots.service.dto;
 
 import lombok.Data;
 
