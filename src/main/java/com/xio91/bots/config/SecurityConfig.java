@@ -6,9 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.client.RestTemplate;
 
 
 @Configuration
@@ -43,7 +46,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         		.authenticated()
         .and()
         	.oauth2Login()
-        	.successHandler(authSuccessHandler);
+        	.successHandler(authSuccessHandler)
+        .and()
+        	.sessionManagement()
+        	.maximumSessions(1).sessionRegistry(sessionRegistry());
+        //.and()
+        	//.sessionManagement().maximumSessions(1).sessionRegistry(new SessionRegistryImpl())
+        	//.expiredSessionStrategy(new SimpleRedirectSessionInformationExpiredStrategy("login"));
+        	
+        
         	//.oauth2Client()
   	    //.and()
   	    //	.formLogin(); // Add this to use a form login for authenticating
@@ -62,6 +73,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+    
+    @Bean
+    public RestTemplate restTemplate() {
+    	return new RestTemplate();
     }
     
 }
