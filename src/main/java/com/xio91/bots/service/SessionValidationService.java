@@ -1,5 +1,7 @@
 package com.xio91.bots.service;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +32,38 @@ public class SessionValidationService {
     @Autowired
     private RestTemplate restTemplate;
     
-    // Check: https://freeformatter.com/cron-expression-generator-quartz.html
-    //@Scheduled(cron = "0 33 * * * ?")
-    @Scheduled(cron = "0 */2 * ? * *")
-    //@Scheduled(fixedRate = 10000)
+    private int invalidatedClients;
+    private int expiredSessions;
+    
+    /**
+     * Checks all sessions by schedule.
+     * <p>All principal tokens are validated against the Twitch validate endpoint.</p>
+     * <p>If the token is not valid, all the sessions from the user owning that token will be invalidated.</p>
+     * @see <a href="https://freeformatter.com/cron-expression-generator-quartz.html">Cron expression generator</a>
+     */
+    @Scheduled(cron = "0 0 * ? * *")
 	public void checkSessions() {
 		
     	LOG.info("Checking alive sessions...");
+    	
+    	invalidatedClients = 0;
+    	expiredSessions = 0;
     	
     	sessionRegistry.getAllPrincipals()
     					.stream()
         				.filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty()) // Filter out users with no sessions
         				.forEach(principal -> validateSession(principal));
     	
+    	logResult();
+    	
+	}
+
+	private void logResult() {
+		if(expiredSessions == 0) {
+    		LOG.info("No sessions have been expired.");
+    	} else {
+    		LOG.info("Expired " + expiredSessions + " session/s from "+invalidatedClients+ " client/s.");
+    	}
 	}
 
 	private void validateSession(Object principal) {
@@ -53,7 +74,16 @@ public class SessionValidationService {
 		OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient("twitch", oauth2User.getName());
 		
 		if(!isValidSession(authorizedClient)) {
-			sessionRegistry.getAllSessions(principal, false).forEach(SessionInformation::expireNow);
+			
+			AtomicInteger counter = new AtomicInteger(0);
+			
+			sessionRegistry.getAllSessions(principal, false)
+							.stream()
+							.peek(u -> counter.getAndIncrement())
+							.forEach(SessionInformation::expireNow);
+			
+			invalidatedClients++;
+			expiredSessions += counter.get();
 		}
 		
 		
