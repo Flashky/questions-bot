@@ -1,7 +1,7 @@
-logging:  level:    #root: DEBUG       #com.xio91.bots.eventhandlers: DEBUG
-    org.springframework.web.client: DEBUG
+#logging:  #level:    #root: DEBUG       #com.xio91.bots.eventhandlers: DEBUG
+    #org.springframework.web.client: DEBUG
     #org.apache.http: DEBUG
-    #httpclient.wire: DEBUG    com.xio91.bots.service.SessionValidationService: DEBUG
+    #httpclient.wire: DEBUG    #com.xio91.bots.service.SessionValidationService: DEBUG
 twitch:
   irc:
     host: irc.chat.twitch.tv
