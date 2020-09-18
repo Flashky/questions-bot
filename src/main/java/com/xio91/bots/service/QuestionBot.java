@@ -1,8 +1,5 @@
 package com.xio91.bots.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.kitteh.irc.client.library.Client;
 import org.kitteh.irc.client.library.Client.Builder;
 import org.kitteh.irc.client.library.event.connection.ClientConnectionClosedEvent;
@@ -56,11 +53,12 @@ public class QuestionBot implements IrcClient {
 					.nick(nick);
 		 
 		// Debug chat input/output
+		/*
 		SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
 		clientBuilder.listeners().input(line -> System.out.println(sdf.format(new Date()) + ' ' + "[I] " + line));
 		clientBuilder.listeners().output(line -> System.out.println(sdf.format(new Date()) + ' ' + "[O] " + line));
 		clientBuilder.listeners().exception(Throwable::printStackTrace);
-		
+		*/
 		
 		// Build the client and add twitch support
 		client = clientBuilder.build();
