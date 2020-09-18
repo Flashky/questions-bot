@@ -1,4 +1,4 @@
-package com.xio91.bots.service;
+package com.xio91.bots.services;
 
 public interface IrcClient {
 

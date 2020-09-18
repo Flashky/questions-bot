@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import com.xio91.bots.properties.TwitchIRCProperties;
-import com.xio91.bots.service.QuestionBot;
+import com.xio91.bots.services.QuestionBot;
 
 
 /**

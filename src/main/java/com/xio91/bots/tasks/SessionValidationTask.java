@@ -1,4 +1,4 @@
-package com.xio91.bots.service;
+package com.xio91.bots.tasks;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,9 +19,9 @@ import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class SessionValidationService {
+public class SessionValidationTask {
 
-	private static final Logger LOG = LoggerFactory.getLogger(SessionValidationService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SessionValidationTask.class);
 	
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
