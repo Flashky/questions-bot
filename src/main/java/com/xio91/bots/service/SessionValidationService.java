@@ -25,9 +25,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.HttpClientErrorException.Unauthorized;
-import org.springframework.web.client.RestTemplate;
 
-import com.xio91.bots.service.dto.TokenResponse;
+import com.xio91.bots.twitch.model.TokenResponse;
+
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class SessionValidationService {

@@ -21,7 +21,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.xio91.bots.service.dto.TokenResponse;
+import com.xio91.bots.twitch.model.TokenResponse;
 
 @Component
 public class AuthenticationService {
