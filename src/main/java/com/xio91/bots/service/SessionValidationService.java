@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -24,11 +25,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
-import org.springframework.web.client.HttpClientErrorException.Unauthorized;
-
-import com.xio91.bots.twitch.model.TokenResponse;
-
 import org.springframework.web.client.RestTemplate;
+
+import com.xio91.bots.twitch.authentication.TokenValidationService;
+import com.xio91.bots.twitch.model.TokenResponse;
 
 @Service
 public class SessionValidationService {
@@ -39,7 +39,7 @@ public class SessionValidationService {
     private OAuth2AuthorizedClientService authorizedClientService;
     
     @Autowired
-    private AuthenticationService authService;
+    private TokenValidationService tokenValidationService;
     
     @Autowired
     private SessionRegistry sessionRegistry;
@@ -55,10 +55,14 @@ public class SessionValidationService {
     	
     	sessionRegistry.getAllPrincipals()
     					.stream()
-        				.filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty())
+        				.filter(u -> !sessionRegistry.getAllSessions(u, false).isEmpty()) // Filter out users with no sessions
         				.forEach(principal -> validateSession(principal));
        
-        
+    	// TODO obtain all sessions of current principal:
+    	//sessionRegistry.getAllSessions(principal, includeExpiredSessions)
+    	// TODO For each session, expire it:
+    	//for each SessionInformation a in List<SessionInformation>: a.expireNow();
+    	
 	}
 
 	private void validateSession(Object principal) {
@@ -69,19 +73,25 @@ public class SessionValidationService {
 		OAuth2AuthenticationToken authentication = new OAuth2AuthenticationToken(oauth2User, oauth2User.getAuthorities(), "twitch");
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		validateSession(authentication);
+		//validateSession(authentication);
 		
 		SecurityContextHolder.getContext().setAuthentication(null);
+		
+		// Expire all sessions
+		sessionRegistry.getAllSessions(principal, false).forEach(SessionInformation::expireNow);
+		
 	}
 
 	private void validateSession(OAuth2AuthenticationToken oauth2Token) {
 		
 		OAuth2AuthorizedClient authorizedClient = getAuthorizedClient(oauth2Token);
 
+		tokenValidationService.validate(authorizedClient);
+		/*
 		if(tokenHasExpired(authorizedClient.getAccessToken())) {
 			LOG.info(authorizedClient.getPrincipalName() + " token is not longer valid.");
 			refreshToken(authorizedClient, oauth2Token);
-		}
+		}*/
 	
 	}
 	
@@ -112,7 +122,7 @@ public class SessionValidationService {
 		}
 		
 	}
-
+/*
 	private boolean tokenHasExpired(OAuth2AccessToken oauth2AccessToken) {
 		
 		try {
@@ -135,7 +145,7 @@ public class SessionValidationService {
 		return false;
 		
 	}
-
+*/
 	
 	private OAuth2AuthorizedClient getAuthorizedClient(OAuth2AuthenticationToken authentication) {
 		return authorizedClientService.loadAuthorizedClient(authentication.getAuthorizedClientRegistrationId(), 

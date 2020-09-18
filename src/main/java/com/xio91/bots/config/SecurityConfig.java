@@ -49,7 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.successHandler(authSuccessHandler)
         .and()
         	.sessionManagement()
-        	.maximumSessions(1).sessionRegistry(sessionRegistry());
+        	.maximumSessions(1)
+        	.sessionRegistry(sessionRegistry())
+        	.expiredUrl("/login");
+        
         //.and()
         	//.sessionManagement().maximumSessions(1).sessionRegistry(new SessionRegistryImpl())
         	//.expiredSessionStrategy(new SimpleRedirectSessionInformationExpiredStrategy("login"));
