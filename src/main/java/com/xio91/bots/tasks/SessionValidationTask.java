@@ -41,7 +41,8 @@ public class SessionValidationTask {
      * <p>If the token is not valid, all the sessions from the user owning that token will be invalidated.</p>
      * @see <a href="https://freeformatter.com/cron-expression-generator-quartz.html">Cron expression generator</a>
      */
-    @Scheduled(cron = "0 0 * ? * *")
+    @Scheduled(cron = "0 0 * ? * *") // Hourly
+    //@Scheduled(cron = "0 * * ? * *") // Every minute
 	public void checkSessions() {
 		
     	LOG.info("Checking alive sessions...");
