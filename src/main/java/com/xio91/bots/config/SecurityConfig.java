@@ -23,22 +23,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	// TODO fix "/" being an permitted access point.
     	
         http.authorizeRequests()
-        	.antMatchers("/","/login**", 
+        	.antMatchers("/login**", 
         			"/webjars/**",
         			"/error**", 
         			"/oauth2/authorization/**",
-        			"/oauth/code/*",
-        			"/check-token").permitAll()
-        		.antMatchers("/", "/irc/**")
-        		.authenticated()
+        			"/oauth/code/*").permitAll()
+        	.antMatchers("/").authenticated()
+        	
         .and()
         	.oauth2Login()
         	.successHandler(authSuccessHandler)
+        .and()
+        	.logout()
+        	.logoutSuccessUrl("/")
+        	.deleteCookies("JSESSIONID")
+        	.clearAuthentication(true)
+        	.invalidateHttpSession(true)
         .and()
         	.sessionManagement()
         	.maximumSessions(1)
         	.sessionRegistry(sessionRegistry())
         	.expiredUrl("/login");
+        	
         
     }
     
