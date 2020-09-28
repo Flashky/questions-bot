@@ -100,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return WebClient.builder().apply(oauth2.oauth2Configuration()).build();
     }
     
-    // Onlyworks withing a servlet context request (@RestController):
+    // Only works withing a servlet context request (@RestController):
     /*
     @Bean
     public WebClient webClient(ClientRegistrationRepository clientRegistrations, 
