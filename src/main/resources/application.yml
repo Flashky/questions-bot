@@ -1,5 +1,5 @@
-#logging:  #level:    #root: DEBUG       #com.xio91.bots.eventhandlers: DEBUG
-    #org.springframework.web.client: DEBUG
+logging:  level:    #root: DEBUG       #com.xio91.bots.eventhandlers: DEBUG
+    org.springframework.web.client: DEBUG
     #org.apache.http: DEBUG
     #httpclient.wire: DEBUG    #com.xio91.bots.service.SessionValidationService: DEBUG
 twitch:
@@ -35,8 +35,8 @@ spring:
             - channel:moderate
             - whispers:read
             - whispers:edit
-            - channel_editor
+            - channel_editor          okta:           client-id: ${okta-client-id}           client-secret: ${okta-client-secret}           client-authentication-method: post           authorization-grant-type: client_credentials           scope:           - write_questions
         provider:
           twitch:
             authorization-uri: https://id.twitch.tv/oauth2/authorize
-            token-uri: https://id.twitch.tv/oauth2/token            user-info-uri: https://id.twitch.tv/oauth2/userinfo            user-name-attribute: preferred_username                        apis:  questions: http://localhost:8081/xio91/v0/questions
+            token-uri: https://id.twitch.tv/oauth2/token            user-info-uri: https://id.twitch.tv/oauth2/userinfo            user-name-attribute: preferred_username          okta:            issuer-uri: https://${okta-domain}/oauth2/default            #okta:#  oauth2:#    clientId: 0oa12du2befOL1ofU4x7#    clientSecret: nwZDJNWbJM-8bUE52jK6shxfFtE-CPsCD2XIXBA2#    issuer: https://${okta-domain}/oauth2/default#    audience: http://localhost:8081             apis:  questions: http://localhost:8081/xio91/v0/questions

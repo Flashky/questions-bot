@@ -30,6 +30,9 @@ public class QuestionBot implements IrcClient {
 	@Autowired
 	private TwitchIRCProperties ircProperties;
 
+	@Autowired
+	private ChannelEventHandler channelEventHandler;
+	
 	private Client client;
 	
 	private boolean connected = false;
@@ -69,7 +72,7 @@ public class QuestionBot implements IrcClient {
 		client.getEventManager().registerEventListener(new ClientEventHandler());
 		client.getEventManager().registerEventListener(new UserEventHandler());
 		client.getEventManager().registerEventListener(new TwitchEventHandler());
-		client.getEventManager().registerEventListener(new ChannelEventHandler());
+		client.getEventManager().registerEventListener(channelEventHandler);
 		client.getEventManager().registerEventListener(this);
 		
 		// Connect and join to channel
