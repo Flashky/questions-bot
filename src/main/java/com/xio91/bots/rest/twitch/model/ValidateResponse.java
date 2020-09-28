@@ -1,4 +1,4 @@
-package com.xio91.bots.twitch.model;
+package com.xio91.bots.rest.twitch.model;
 
 import java.util.List;
 
